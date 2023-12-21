@@ -1,0 +1,95 @@
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="card text-black col-5" style="border-radius: 25px;">
+        <div class="card-body p-md-5">
+          <p class="text-center h1 fw-bold mx-1 mx-md-4">Log in</p>
+
+          <form action="/user/login" method="post"  class="mx-1 mx-md-4" >
+            <div class="form-outline mb-4">
+              <label class="form-label" for="username">Username</label>
+              <input type="text" id="username" name="username" class="form-control py-2" placeholder="Enter username"
+                value="{{username}}" />
+
+              <div class="col-auto">
+                <span id="msgUsername" class="form-text text-danger">
+                  {{errorUsername}}
+                </span>
+              </div>
+            </div>
+
+            <div class="form-outline mb-3">
+              <label class="form-label" for="password">Password</label>
+              <input type="password" id="password" name="password" class="form-control py-2"
+                placeholder="Enter password" value="{{password}}" />
+
+              <div class="col-auto">
+                <span id="msgPw" class="form-text text-danger">
+                  {{errorPw}}
+                </span>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- Checkbox -->
+              <div class="form-check mb-0">
+                <input class="form-check-input me-2" type="checkbox" value="true" id="checkboxRember" name="remember" />
+                <label class="form-check-label" for="checkboxRember">
+                  Remember me
+                </label>
+              </div>
+              <a href="#!" class="text-body">Forgot password?</a>
+            </div>
+
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <button type="submit" class="btn btn-primary btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+              <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/user/signup" class="link-danger">Sign
+                  up</a></p>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const username = document.getElementById('username');
+  const password = document.getElementById('password');
+  const msgUsername = document.getElementById('msgUsername');
+  const msgPw = document.getElementById('msgPw');
+  const btnSubmit = document.querySelector('button[type="submit"]');
+
+  username.onblur = checkUsername;
+  username.oninput = () => {
+    msgUsername.innerHTML = '';
+  }
+
+  password.oninput = () => {
+    msgPw.innerHTML = '';
+  }
+
+  btnSubmit.onsubmit = async function (e) {
+    e.preventDefault();
+
+    const isUsername = await checkUsername();
+
+    if (isUsername) {
+      this.submit();
+    }
+  }
+
+  async function checkUsername() {
+    const res = await fetch(`/api/user/check-username?username=${username.value}`);
+    const data = await res.json();
+
+    if (!data.isExisted) {
+      msgUsername.innerHTML = 'Username is not exist';
+      return false;
+    }
+
+    return true;
+  }
+</script>

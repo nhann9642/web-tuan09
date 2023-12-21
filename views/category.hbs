@@ -1,0 +1,78 @@
+<div class="container">
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Home</a>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        </ul>
+
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{username}}
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/category">Category</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="/user/logout">Log out</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col" colspan="3">Name</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {{#each categories}}
+      <tr>
+        <th scope="row">{{this.CatID}}</th>
+        <td>{{this.CatName}}</td>
+        <td><a href="/category/{{this.CatID}}/edit">Edit</a></td>
+        <td><a href="/" class="remove-btn" cat-id = {{this.CatID}}>Remove</a></td>
+      </tr>
+      {{else}}
+      <td colspan="5">No data</td>
+      {{/each}}
+  </table>
+
+  <h3>Add new category</h3>
+  <form action="/category/create" method="post">
+    <div class="form-outline mb-3">
+      <label class="form-label" for="name">Category name</label>
+      <input type="text" id="name" name="name" class="form-control py-2 w-50" placeholder="Enter name"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+</div>
+
+<form action="" method="post" name="hiden-form-remove"></form>
+
+<script>
+  const removeBtns = document.querySelectorAll('.remove-btn');
+
+  removeBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const catId = btn.getAttribute('cat-id');
+      const form = document.forms['hiden-form-remove'];
+
+      form.action = `/category/${catId}?_method=DELETE`;
+      form.submit();
+    })
+  })
+</script>

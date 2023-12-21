@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+.header {
+    background-color: gray;
+}
+
+.w-65 {
+    width: 65%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.page-link {
+    cursor: pointer;
+    user-select: none;
+}
+
+.mw-90 {
+    max-width: 90%;
+}
+
+.btn {
+    text-align: center;
+}

@@ -1,0 +1,65 @@
+<div class="container">
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Home</a>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        </ul>
+
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{username}}
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/category">Category</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="/user/logout">Log out</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="dropdown my-4">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{categoryName}}
+    </button>
+    <ul class="dropdown-menu">
+      {{#each categories}}
+      <li><a class="dropdown-item" href="?catID={{this.CatID}}">{{this.CatName}}</a></li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Decription</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {{#each products}}
+      <tr>
+        <th scope="row">{{this.ProID}}</th>
+        <td>{{this.ProName}}</td>
+        <td>{{this.TinyDes}}</td>
+        <td>{{this.Price}}</td>
+        <td>{{this.Quantity}}</td>
+      </tr>
+      {{else}}
+        <td colspan="5">No data</td>
+      {{/each}}
+  </table>
+</div>
